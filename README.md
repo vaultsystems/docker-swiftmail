@@ -1,1 +1,1 @@
-	docker run --name swiftmail -d -e OS_TENANT_ID= -e OS_USERNAME= -e OS_PASSWORD= swiftmail/latest
+	docker run  --volumes-from postfix --name swiftmail -d -e OS_TENANT_ID= -e OS_USERNAME= -e OS_PASSWORD= swiftmail/latest
