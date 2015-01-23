@@ -6,6 +6,6 @@ RUN apt-get update && apt-get install -y python-swiftclient
 
 ADD swift-upload.sh /usr/local/bin/
 
-ENV OS_AUTH_URL=https://api.vaultsystems.com.au:5443/v2.0
+ENV OS_AUTH_URL https://api.vaultsystems.com.au:5443/v2.0
 
-CMD sh -x -c /usr/local/bin/swift-upload.sh
+CMD /usr/local/bin/swift-upload.sh
