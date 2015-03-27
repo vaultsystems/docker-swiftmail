@@ -1,11 +1,12 @@
 FROM ubuntu:trusty
 MAINTAINER Christoph Dwertmann <christoph.dwertmann@vaultsystems.com.au>
 
-ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get update && apt-get install -y python-swiftclient
+RUN DEBIAN_FRONTEND=noninteractive \
+    apt-get update -qq && \
+    apt-get -y install python-swiftclient && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 ADD swift-upload.sh /usr/local/bin/
-
-ENV OS_AUTH_URL https://api.vaultsystems.com.au:5443/v2.0
 
 CMD /usr/local/bin/swift-upload.sh
