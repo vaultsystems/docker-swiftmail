@@ -3,10 +3,12 @@ MAINTAINER Christoph Dwertmann <christoph.dwertmann@vaultsystems.com.au>
 
 RUN DEBIAN_FRONTEND=noninteractive \
     apt-get update -qq && \
-    apt-get -y install python-swiftclient && \
+    apt-get -y install python-swiftclient python-flask && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/* && \
+    echo "Australia/Sydney" > /etc/timezone && \
+    dpkg-reconfigure tzdata
 
-ADD swift-upload.sh /usr/local/bin/
+ADD swiftmail.py /
 
-CMD /usr/local/bin/swift-upload.sh
+CMD python /swiftmail.py
