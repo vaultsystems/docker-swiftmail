@@ -5,9 +5,9 @@ RUN DEBIAN_FRONTEND=noninteractive \
     apt-get update -qq && \
     apt-get -y install python-swiftclient python-flask && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    echo "Australia/Sydney" > /etc/timezone && \
-    dpkg-reconfigure tzdata
+    rm -rf /var/lib/apt/lists/*
+
+RUN sudo echo Australia/Sydney > /etc/timezone && sudo dpkg-reconfigure --frontend noninteractive tzdata
 
 ADD swiftmail.py /
 
