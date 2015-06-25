@@ -1,7 +1,7 @@
 #!/usr/bin/python
-from flask import Flask, abort, request
+from flask import Flask,abort,request
 from subprocess import call
-import os,datetime
+import os,datetime,email
 
 UPLOAD_FOLDER = '/tmp'
 app = Flask(__name__)
@@ -14,7 +14,11 @@ def upload_file():
     filename = str(datetime.datetime.now().isoformat('T')).replace(':', '-')
     path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
     f.save(path)
-    ret = call(["swift", "upload", "mail", path, "--object-name", os.path.basename(path)])
+    f = open(path, 'r')
+    msg = email.message_from_string(f.read())
+    container = 'mail'
+    if 'training-scan@' in msg['To']: container='mail_training'
+    ret = call(["swift", "upload", container, path, "--object-name", os.path.basename(path)])
     os.remove(path)
     if ret == 0:
       return 'success'

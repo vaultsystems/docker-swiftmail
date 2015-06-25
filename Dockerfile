@@ -7,7 +7,7 @@ RUN DEBIAN_FRONTEND=noninteractive \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-RUN sudo echo Australia/Sydney > /etc/timezone && sudo dpkg-reconfigure --frontend noninteractive tzdata
+RUN echo Australia/Sydney > /etc/timezone && dpkg-reconfigure --frontend noninteractive tzdata
 
 ADD swiftmail.py /
 
