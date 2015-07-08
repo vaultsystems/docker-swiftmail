@@ -1,14 +1,10 @@
-FROM ubuntu:trusty
+FROM alpine
 MAINTAINER Christoph Dwertmann <christoph.dwertmann@vaultsystems.com.au>
-
-RUN DEBIAN_FRONTEND=noninteractive \
-    apt-get update -qq && \
-    apt-get -y install python-swiftclient python-flask && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
-RUN echo Australia/Sydney > /etc/timezone && dpkg-reconfigure --frontend noninteractive tzdata
+RUN apk --update add python py-pip
+RUN apk add --virtual build-dependencies gcc python-dev musl-dev tzdata \
+    && pip install python-keystoneclient python-swiftclient Flask \
+    && cp /usr/share/zoneinfo/Australia/Sydney /etc/localtime \
+    && apk del build-dependencies
 
 ADD swiftmail.py /
-
 CMD python /swiftmail.py

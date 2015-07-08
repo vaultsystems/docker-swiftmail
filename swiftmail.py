@@ -18,7 +18,7 @@ def upload_file():
     msg = email.message_from_string(f.read())
     container = 'mail'
     if 'training-scan@' in msg['To']: container='mail_training'
-    ret = call(["swift", "upload", container, path, "--object-name", os.path.basename(path)])
+    ret = call(["swift", "upload", container, path, "--object-name", os.path.basename(path),"--retries=10"])
     os.remove(path)
     if ret == 0:
       return 'success'
