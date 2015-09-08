@@ -1,9 +1,8 @@
-FROM alpine
+FROM alpine:3.1
 MAINTAINER Christoph Dwertmann <christoph.dwertmann@vaultsystems.com.au>
 RUN apk --update add python py-pip
-RUN apk --update add --virtual build-dependencies gcc python-dev musl-dev \
+RUN apk --update add --virtual build-dependencies build-base python-dev \
     && pip install python-keystoneclient python-swiftclient Flask waitress \
     && apk del build-dependencies
-RUN setup-timezone -z /usr/share/zoneinfo/Australia/Sydney
 ADD swiftmail.py /
 CMD python -u /swiftmail.py
